@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Seating — Alchemy</title>
+    <link th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <nav th:replace="~{nav :: navbar}"></nav>
+</header>
+
+<div class="page-header">
+    <h1>Create Seating</h1>
+    <div class="sub">Seatings</div>
+    <div class="gold-line"></div>
+</div>
+
+<div class="content-area">
+    <form th:action="@{/seatings/create}" method="post" th:object="${seating}" class="alchemy-form-wide">
+        <div class="form-group">
+            <label class="form-label">Seating Name <span style="color:#8b2121;">*</span></label>
+            <input type="text" th:field="*{name}" class="form-control" placeholder="e.g. Evening Service" required/>
+            <div class="form-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+
+        <div class="form-group">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <label class="form-label" style="margin:0;" for="eventSearch">Event <span style="color:#8b2121;">*</span></label>
+                <input type="search" class="form-control" id="eventSearch" placeholder="Search events…"
+                       autocomplete="off" style="max-width:200px;"/>
+            </div>
+            <div th:each="event, iterStat : ${events}" class="event-filter-row"
+                 style="padding:6px 0; border-bottom:1px solid #f5f5f5; display:flex; align-items:center; gap:10px;">
+                <input class="form-check-input event-radio" type="radio" th:field="*{eventId}" th:value="${event.id}"
+                       th:id="|ev-${event.id}|"
+                       th:attr="data-duration=${event.durationInMinutes}"
+                       th:required="${iterStat.first}"/>
+                <label style="font-size:0.93rem; cursor:pointer;" th:for="|ev-${event.id}|" th:text="${event.name}">Event</label>
+            </div>
+            <div class="form-error" th:if="${#fields.hasErrors('eventId')}" th:errors="*{eventId}"></div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Start Date &amp; Time <span style="color:#8b2121;">*</span></label>
+            <input type="datetime-local" th:field="*{startDateTime}" class="form-control" required/>
+            <div class="form-error" th:if="${#fields.hasErrors('startDateTime')}" th:errors="*{startDateTime}"></div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Duration (minutes) <span style="color:#8b2121;">*</span></label>
+            <input type="number" th:field="*{durationMinutes}" class="form-control" placeholder="e.g. 90" required min="1" id="durationInput"/>
+            <div class="form-hint">Defaults to event duration, but can be changed</div>
+            <div class="form-error" th:if="${#fields.hasErrors('durationMinutes')}" th:errors="*{durationMinutes}"></div>
+        </div>
+
+        <div class="form-group">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <label class="form-label" style="margin:0;" for="tableSearch">Select Tables <span style="color:#8b2121;">*</span></label>
+                <input type="search" class="form-control" id="tableSearch" placeholder="Search tables…"
+                       autocomplete="off" style="max-width:200px;"/>
+            </div>
+            <div th:each="table : ${tables}" class="table-filter-row"
+                 style="padding:6px 0; border-bottom:1px solid #f5f5f5; display:flex; align-items:center; gap:10px;">
+                <input class="form-check-input" type="checkbox" th:field="*{tableIds}" th:value="${table.id}" th:id="|tbl-${table.id}|"/>
+                <label style="font-size:0.93rem; cursor:pointer;" th:for="|tbl-${table.id}|"
+                       th:text="${table.name + ' — Capacity: ' + table.capacity}">Table 1 — Capacity: 4</label>
+            </div>
+            <div class="form-hint">Tables already used at this time will not be selectable</div>
+            <div class="form-error" th:if="${#fields.hasErrors('tableIds')}" th:errors="*{tableIds}"></div>
+        </div>
+
+        <div class="btn-row" style="margin-top:8px;">
+            <a th:href="@{/seatings}" class="btn-alchemy-outline">Cancel</a>
+            <button type="submit" class="btn-alchemy-gold">Create Seating</button>
+        </div>
+    </form>
+</div>
+
+<footer>
+    <div th:replace="~{partial :: footer}"></div>
+</footer>
+
+<script th:inline="javascript">
+    (function () {
+        function bindListFilter(inputId, rowSelector) {
+            var input = document.getElementById(inputId);
+            if (!input) return;
+            input.addEventListener('input', function () {
+                var q = input.value.trim().toLowerCase();
+                document.querySelectorAll(rowSelector).forEach(function (row) {
+                    var label = row.querySelector('label');
+                    var text = label ? label.textContent.toLowerCase() : '';
+                    row.classList.toggle('d-none', q.length > 0 && text.indexOf(q) === -1);
+                });
+            });
+        }
+
+        bindListFilter('eventSearch', '.event-filter-row');
+        bindListFilter('tableSearch', '.table-filter-row');
+
+        var durationInput = document.getElementById('durationInput');
+        var radios = document.querySelectorAll('input.event-radio[type="radio"]');
+        if (!durationInput || !radios.length) return;
+
+        function selectedRadio() {
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked) return radios[i];
+            }
+            return null;
+        }
+
+        function applyEventDuration(force) {
+            var r = selectedRadio();
+            if (!r) return;
+            var duration = r.getAttribute('data-duration');
+            if (!duration) return;
+            durationInput.setAttribute('max', duration);
+            if (force || !durationInput.value || durationInput.value === "0") {
+                durationInput.value = duration;
+            }
+            if (Number(durationInput.value) > Number(duration)) {
+                durationInput.value = duration;
+            }
+        }
+
+        radios.forEach(function (radio) {
+            radio.addEventListener('change', function () { applyEventDuration(true); });
+        });
+
+        applyEventDuration(false);
+    })();
+</script>
+</body>
+</html>

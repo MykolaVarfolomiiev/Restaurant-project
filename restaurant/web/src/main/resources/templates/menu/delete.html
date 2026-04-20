@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>Delete Menu — Alchemy</title>
+</head>
+<body>
+<header>
+    <nav th:replace="~{nav :: navbar}"></nav>
+</header>
+
+<div class="page-header">
+    <h1>Delete Menu</h1>
+    <div class="sub">Confirm</div>
+    <div class="gold-line"></div>
+</div>
+
+<div class="content-area">
+    <div class="alchemy-alert-danger" style="margin-bottom:28px;">
+        Are you sure you want to delete this menu? This action cannot be undone.
+    </div>
+
+    <div class="alchemy-card" style="max-width:480px; margin-bottom:28px;">
+        <div th:replace="~{menu/fragments :: details}"></div>
+    </div>
+
+    <form method="post" th:action="@{/event/menu/delete/{menuId}(menuId=${menu.id})}">
+        <div class="btn-row">
+            <input type="submit" value="Delete Menu" class="btn-alchemy-danger"/>
+            <a th:href="@{/event/menu}" class="btn-alchemy-outline">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<footer>
+    <div th:replace="~{partial :: footer}"></div>
+</footer>
+</body>
+</html>

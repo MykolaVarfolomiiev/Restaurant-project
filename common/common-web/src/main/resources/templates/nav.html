@@ -1,0 +1,85 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nav</title>
+    <th:block th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <nav th:fragment="navbar" class="navbar navbar-expand-lg"
+         th:classappend="${navViewModel != null and navViewModel.showLogoutButton} ? 'nav-logged-in' : ''">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" th:href="@{/}">ALCHEMY</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain"
+                    aria-controls="navMain" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMain">
+
+                <!-- Logged-out layout: links left, auth buttons + reserve right -->
+                <th:block th:if="${navViewModel == null or !navViewModel.showLogoutButton}">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/reserve/track}">Track Reservation</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav align-items-center gap-2">
+                        <li class="nav-item" th:if="${navViewModel != null and navViewModel.showLoginLink}">
+                            <a class="btn-outline-nav" th:href="@{/login}">Login</a>
+                        </li>
+                        <li class="nav-item" th:if="${navViewModel != null and navViewModel.showRegisterLink}">
+                            <a class="btn-outline-nav" th:href="@{/register}">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn-reserve" th:href="@{/reserve}">Reserve a Table</a>
+                        </li>
+                    </ul>
+                </th:block>
+
+                <!-- Logged-in layout: all links centered, username + logout on right -->
+                <th:block th:if="${navViewModel != null and navViewModel.showLogoutButton}">
+                    <ul class="navbar-nav mx-auto align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/event}">Events</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/event/create}">Create Event</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/event/menu}">Menus</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/seatings}">Seatings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/tables}">Dining Tables</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/reservations}">Reservations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/reserve/track}">Track Reservation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn-reserve" th:href="@{/reserve}">Reserve a Table</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav align-items-center gap-2">
+                        <li class="nav-item" th:if="${navViewModel.showUserName}">
+                            <span class="nav-username">Welcome, <span th:text="${navViewModel.username}"></span></span>
+                        </li>
+                        <li class="nav-item">
+                            <form class="d-inline" th:action="@{/logout}" method="post">
+                                <button class="btn-outline-nav" type="submit">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </th:block>
+
+            </div>
+        </div>
+    </nav>
+</header>
+</body>
+</html>

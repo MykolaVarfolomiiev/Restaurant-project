@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu Fragments</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<!--/*@thymesVar id="menu" type="nbcc.resto.domain.dto.Menu"*/-->
+
+<th:block th:fragment="input">
+    <th:block th:object="${menu}" th:if="${menu != null}">
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{version}"/>
+        <input type="hidden" th:field="*{popUpEvent.id}" th:if="*{popUpEvent}"/>
+        <input type="hidden" th:field="*{popUpEvent.version}" th:if="*{popUpEvent}"/>
+
+        <div th:if="${#fields.hasGlobalErrors()}" class="alchemy-alert-danger">
+            <div th:each="err : ${#fields.globalErrors}" th:text="${err}"></div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Menu Name</label>
+            <input th:field="*{name}" class="form-control" placeholder="Enter menu name"/>
+            <div class="form-error" th:errors="*{name}"></div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Description</label>
+            <input type="text" th:field="*{description}" class="form-control" placeholder="Enter description"/>
+            <div class="form-error" th:errors="*{description}"></div>
+        </div>
+    </th:block>
+</th:block>
+
+<th:block th:fragment="details">
+    <th:block th:object="${menu}" th:if="${menu != null}">
+        <div class="alchemy-card-title">Menu</div>
+        <div class="alchemy-card-row">
+            <span class="alchemy-card-label">Name</span>
+            <span class="alchemy-card-value" th:text="*{name}"></span>
+        </div>
+        <div class="alchemy-card-row">
+            <span class="alchemy-card-label">Description</span>
+            <span class="alchemy-card-value" th:text="*{description}"></span>
+        </div>
+        <div class="alchemy-card-row" th:if="${menu.createdAt != null}">
+            <span class="alchemy-card-label">Created</span>
+            <span class="alchemy-card-value" th:text="${#temporals.format(menu.createdAt, 'dd/MM/yyyy h:mm a')}"></span>
+        </div>
+    </th:block>
+</th:block>
+
+<th:block th:fragment="list" th:object="${menuListViewModel}">
+    <div th:unless="*{isEmpty()}">
+        <table class="alchemy-table">
+            <thead>
+                <tr>
+                    <th>Menu Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="menu : *{menus}">
+                    <td>
+                        <a th:href="@{/event/menu/{menuId}(menuId=${menu.id})}"
+                           th:text="${menu.name}"
+                           class="table-link">Menu Name</a>
+                    </td>
+                    <td>
+                        <div class="btn-row" style="justify-content:flex-end;">
+                            <a th:href="@{/event/menu/edit/{menuId}(menuId=${menu.id})}"
+                               class="btn-alchemy-edit">Edit</a>
+                            <a th:href="@{/event/menu/delete/{menuId}(menuId=${menu.id})}"
+                               class="btn-alchemy-danger">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="*{isEmpty()}" class="alchemy-alert-info">
+        No menus found. Create one to get started.
+    </div>
+</th:block>
+
+<th:block th:fragment="listSmall" th:object="${menuListViewModel}">
+    <div th:unless="*{isEmpty()}">
+        <table class="alchemy-table">
+            <tbody>
+                <tr th:each="menu : *{menus}">
+                    <td th:text="${menu.name}">Menu Name</td>
+                    <td>
+                        <div class="btn-row" style="justify-content:flex-end;">
+                            <a th:href="@{/event/menu/{menuId}(menuId=${menu.id})}"
+                               class="btn-alchemy-outline">Details</a>
+                            <button th:if="*{popUpEventId != null}"
+                                    type="submit"
+                                    class="btn-alchemy-danger"
+                                    th:formaction="@{/event/{eventId}/menu/unlink/{menuId}(eventId=*{popUpEventId}, menuId=${menu.id})}"
+                                    formmethod="post">
+                                Remove
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="*{isEmpty()}" style="padding:16px 0;">
+        <p style="color:#aaa; font-style:italic; font-size:0.9rem;">No menus found.</p>
+        <a th:href="@{/event/{eventId}/menu/create(eventId=*{popUpEventId})}" class="btn-alchemy-primary">+ Add Menu</a>
+    </div>
+</th:block>
+
+</body>
+</html>

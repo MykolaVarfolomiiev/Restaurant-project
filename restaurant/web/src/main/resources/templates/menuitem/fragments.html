@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Input</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<!--/*@thymesVar id="menuItem" type="nbcc.resto.domain.dto.MenuItem"*/-->
+<th:block th:fragment="input">
+    <th:block th:object="${menuItem}" th:if="${menuItem != null}">
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{version}"/>
+        <input type="hidden" th:field="*{menu.id}" th:if="*{menu}"/>
+        <input type="hidden" th:field="*{menu.version}" th:if="*{menu}"/>
+
+        <div th:if="${#fields.hasGlobalErrors()}" class="alchemy-alert-danger">
+            <div th:each="err : ${#fields.globalErrors}" th:text="${err}"></div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Menu Item Name</label>
+            <input th:field="*{name}" class="form-control" placeholder="Enter menu item name"/>
+            <div class="form-error" th:errors="*{name}"></div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Description</label>
+            <input type="text" th:field="*{description}" class="form-control" placeholder="Enter description"/>
+            <div class="form-error" th:errors="*{description}"></div>
+        </div>
+    </th:block>
+</th:block>
+
+<th:block th:fragment="details">
+    <th:block th:object="${menuItem}" th:if="${menuItem != null}">
+        <div class="alchemy-card-title">Menu Item</div>
+        <div class="alchemy-card-row">
+            <span class="alchemy-card-label">Name</span>
+            <span class="alchemy-card-value" th:text="*{name}"></span>
+        </div>
+        <div class="alchemy-card-row">
+            <span class="alchemy-card-label">Description</span>
+            <span class="alchemy-card-value" th:text="*{description}"></span>
+        </div>
+    </th:block>
+</th:block>
+
+<!-- Menu Items List -->
+<!--/*@thymesVar id="menuItemListViewModel" type="nbcc.resto.viewmodels.MenuItemListViewModel"*/-->
+<th:block th:fragment="menuItemList" th:object="${menuItemListViewModel}">
+    <div style="margin-top:32px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <span class="section-label">Menu Items</span>
+            <a th:if="*{!menuItems.isEmpty()}" th:href="@{/menu/{menuId}/menuitem/create(menuId=*{menuId})}"
+               class="btn-alchemy-primary">+ Add Item</a>
+        </div>
+
+        <table class="alchemy-table" th:unless="*{isEmpty()}">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="menuitem : *{menuItems}">
+                    <td>
+                        <a th:href="@{/menu/{menuId}/menuitem/{id}(id=${menuitem.id}, menuId=*{menuId})}"
+                           th:text="${menuitem.name}"
+                           class="table-link">Menu Item Name</a>
+                    </td>
+                    <td th:text="${menuitem.description}">Description</td>
+                    <td>
+                        <div class="btn-row" style="justify-content:flex-end;">
+                            <a th:if="*{showEdit}" th:href="@{/menu/{menuId}/menuitem/edit/{id}(id=${menuitem.id}, menuId=*{menuId})}"
+                               class="btn-alchemy-edit">Edit</a>
+                            <a th:if="*{showDelete}" th:href="@{/menu/{menuId}/menuitem/delete/{id}(id=${menuitem.id}, menuId=*{menuId})}"
+                               class="btn-alchemy-danger">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div th:if="*{isEmpty()}" class="alchemy-alert-info">
+            No menu items yet.
+            <a th:href="@{/menu/{menuId}/menuitem/create(menuId=*{menuId})}" class="btn-alchemy-primary" style="margin-left:12px;">+ Add Item</a>
+        </div>
+    </div>
+</th:block>
+
+</body>
+</html>

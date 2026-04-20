@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Application Error — Alchemy</title>
+    <link th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <nav th:replace="~{nav :: navbar}"></nav>
+</header>
+
+<div class="error-wrapper">
+    <div class="error-code" style="font-size:5rem;">!</div>
+    <h1 class="error-title">Something Went Wrong</h1>
+    <!--/*@thymesVar id="message" type="java.lang.String"*/-->
+    <p class="error-message" th:if="${message}" th:text="${message}"></p>
+    <p class="error-message" th:unless="${message}">If this persists, please contact support.</p>
+    <a th:href="@{/}" class="btn-alchemy-gold">Back to Home</a>
+</div>
+
+<footer>
+    <div th:replace="~{partial :: footer}"></div>
+</footer>
+</body>
+</html>

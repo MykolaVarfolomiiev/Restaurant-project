@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Event — Alchemy</title>
+    <link th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <nav th:replace="~{nav :: navbar}"></nav>
+</header>
+
+<div class="page-header">
+    <h1>Delete Event</h1>
+    <div class="sub">Events</div>
+    <div class="gold-line"></div>
+</div>
+
+<div class="content-area">
+    <div class="alchemy-alert-danger">
+        Are you sure you want to delete this event? If any seating has guest reservation requests, the event and its seatings will be <strong>archived</strong> instead of permanently deleted.
+    </div>
+
+    <div class="alchemy-card" style="max-width:560px;">
+        <div class="alchemy-card-title">Event Details</div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">Name</div>
+            <div class="alchemy-card-value" th:text="${event.name}">Event Name</div>
+        </div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">Description</div>
+            <div class="alchemy-card-value" th:text="${event.eventDescription}">Description</div>
+        </div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">Start Date</div>
+            <div class="alchemy-card-value" th:text="${event.getStartDateFormatted()}">2025-01-01</div>
+        </div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">End Date</div>
+            <div class="alchemy-card-value" th:text="${event.getEndDateFormatted()}">2025-01-02</div>
+        </div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">Duration</div>
+            <div class="alchemy-card-value" th:text="${event.durationInMinutes + ' min'}">90 min</div>
+        </div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">Price</div>
+            <div class="alchemy-card-value" th:text="'$' + ${event.price}">$0.00</div>
+        </div>
+    </div>
+
+    <div th:if="${!#lists.isEmpty(seatings)}" style="margin-top:32px;">
+        <div style="font-family:'Playfair Display',serif; font-size:1.1rem; color:#1a1a1a; padding-bottom:10px; border-bottom:2px solid #1a1a1a; margin-bottom:0;">
+            Seatings
+        </div>
+        <table class="alchemy-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Start Date &amp; Time</th>
+                    <th>Duration</th>
+                    <th>End Date &amp; Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="seating : ${seatings}">
+                    <td th:text="${seating.name}">Lunch Seating</td>
+                    <td th:text="${#temporals.format(seating.startDateTime, 'MMM d, yyyy — h:mm a')}">Jan 1, 2025 — 7:00 PM</td>
+                    <td th:text="${seating.durationMinutes + ' min'}">90 min</td>
+                    <td th:text="${#temporals.format(seating.getEndDateTime(), 'MMM d, yyyy — h:mm a')}">Jan 1, 2025 — 8:30 PM</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <form th:action="@{/event/delete/{id}(id=${event.id})}" method="post" class="btn-row" style="margin-top:28px;">
+        <a th:href="@{/event}" class="btn-alchemy-outline">Back To List</a>
+        <button type="submit" class="btn-alchemy-danger">Delete Event</button>
+    </form>
+</div>
+
+<footer>
+    <div th:replace="~{partial :: footer}"></div>
+</footer>
+</body>
+</html>

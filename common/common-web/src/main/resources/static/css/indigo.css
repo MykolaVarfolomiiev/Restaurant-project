@@ -1,0 +1,270 @@
+/* Indigo / Wireframe styles - matches team01_alpha and wireframes design */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Jost:wght@300;400;500&display=swap');
+
+.indigo-page {
+  --bg: #080d1a;
+  --bg2: #0e1628;
+  --bg3: #141e35;
+  --border: #1e2d4a;
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --text: #e8e8e8;
+  --text-muted: #7a8aaa;
+  --danger: #c0392b;
+  --success: #1a7a4a;
+  --white: #ffffff;
+}
+
+body.indigo-page {
+  font-family: 'Jost', sans-serif;
+  background: #04070f !important;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.indigo-page .page-section {
+  padding: 50px 40px;
+  min-height: 60vh;
+}
+
+.indigo-page .page-label {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.indigo-page .page-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  color: var(--white);
+  margin-bottom: 40px;
+  font-weight: 400;
+}
+
+.indigo-page .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+}
+
+.indigo-page .btn {
+  padding: 10px 24px;
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  border: none;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.indigo-page .btn-primary {
+  background: var(--gold);
+  color: #080d1a;
+  font-weight: 500;
+}
+
+.indigo-page .btn-secondary {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.indigo-page .btn-danger {
+  background: var(--danger);
+  color: white;
+}
+
+.indigo-page .btn-sm {
+  padding: 6px 14px;
+  font-size: 11px;
+}
+
+.indigo-page .form-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 36px;
+  max-width: 520px;
+  border-radius: 4px;
+}
+
+.indigo-page .form-group {
+  margin-bottom: 24px;
+}
+
+.indigo-page .form-label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.indigo-page .form-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'Jost', sans-serif;
+  font-size: 13px;
+  border-radius: 2px;
+  outline: none;
+}
+
+.indigo-page .form-input:focus {
+  border-color: var(--gold);
+}
+
+.indigo-page .form-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 5px;
+}
+
+.indigo-page .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.indigo-page .form-actions-spread {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.indigo-page .data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.indigo-page .data-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.indigo-page .data-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text);
+}
+
+.indigo-page .data-table tbody tr:hover td {
+  background: rgba(201,168,76,0.03);
+}
+
+.indigo-page .table-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.indigo-page .detail-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 36px;
+  max-width: 580px;
+  border-radius: 4px;
+}
+
+.indigo-page .detail-row {
+  display: flex;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 20px;
+}
+
+.indigo-page .detail-row:last-child {
+  border-bottom: none;
+}
+
+.indigo-page .detail-key {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  min-width: 160px;
+}
+
+.indigo-page .detail-value {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.indigo-page .confirm-box {
+  background: rgba(192,57,43,0.08);
+  border: 1px solid rgba(192,57,43,0.3);
+  padding: 20px 24px;
+  border-radius: 4px;
+  margin-bottom: 28px;
+  max-width: 580px;
+}
+
+.indigo-page .confirm-box p {
+  color: #e57368;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.indigo-page .message-success {
+  background: rgba(26,122,74,0.2);
+  border: 1px solid rgba(26,122,74,0.4);
+  color: #4caf7d;
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+
+.indigo-page .event-group {
+  margin-bottom: 40px;
+}
+
+.indigo-page .event-group-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  color: var(--gold-light);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.indigo-page .checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 12px 16px;
+  border-radius: 2px;
+}
+
+.indigo-page .checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.indigo-page .checkbox-item input {
+  accent-color: var(--gold);
+}

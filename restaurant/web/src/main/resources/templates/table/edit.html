@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Table — Alchemy</title>
+    <link th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <nav th:replace="~{nav :: navbar}"></nav>
+</header>
+
+<div class="page-header">
+    <h1>Edit Table</h1>
+    <div class="sub">Dining Tables</div>
+    <div class="gold-line"></div>
+</div>
+
+<div class="content-area">
+    <form th:action="@{/tables/edit/{id}(id=${table.id})}" method="post" th:object="${table}" class="alchemy-form">
+        <div class="form-group">
+            <label class="form-label">Table Name <span style="color:#aaa; font-weight:300;">(optional)</span></label>
+            <input type="text" th:field="*{name}" class="form-control" placeholder="e.g. The Garden Room"/>
+            <div class="form-hint">Leave blank to revert to auto-generated name</div>
+            <div class="form-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Capacity <span style="color:#8b2121;">*</span></label>
+            <input type="number" th:field="*{capacity}" class="form-control" required min="1"/>
+            <div class="form-error" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"></div>
+        </div>
+        <div class="btn-row" style="margin-top:8px;">
+            <a th:href="@{/tables}" class="btn-alchemy-outline">Cancel</a>
+            <button type="submit" class="btn-alchemy-gold">Save Changes</button>
+        </div>
+    </form>
+</div>
+
+<footer>
+    <div th:replace="~{partial :: footer}"></div>
+</footer>
+</body>
+</html>

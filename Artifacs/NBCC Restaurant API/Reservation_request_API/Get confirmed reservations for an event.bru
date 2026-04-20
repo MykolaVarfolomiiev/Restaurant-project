@@ -1,0 +1,84 @@
+meta {
+  name: Get confirmed reservations for an event
+  type: http
+  seq: 2
+  tags: [
+    Reservation_request_API
+  ]
+}
+
+get {
+  url: {{baseUrl}}/api/reservation-request/event/:eventId/confirmed
+  body: none
+  auth: bearer
+}
+
+params:path {
+  eventId: {{eventId_confirm_reservation}}
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+example {
+  name: 200 Response
+  description: OK
+  
+  request: {
+    url: {{baseUrl}}/api/reservation-request/event/:eventId/confirmed
+    method: GET
+    mode: none
+    params:path: {
+      eventId: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: */*
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: text
+      content: '''
+        {
+          "invalid": false,
+          "validationErrors": [
+            {
+              "field": "",
+              "message": "",
+              "value": ""
+            }
+          ],
+          "successful": false,
+          "value": [
+            {
+              "id": 0,
+              "seatingId": 0,
+              "firstName": "",
+              "lastName": "",
+              "email": "",
+              "groupSize": 0,
+              "status": "PENDING",
+              "uuid": "",
+              "createdAt": "",
+              "seatingName": "",
+              "seatingStartDateTime": "",
+              "eventId": 0,
+              "eventName": "",
+              "guestFullName": ""
+            }
+          ],
+          "empty": false,
+          "error": false
+        }
+      '''
+    }
+  }
+}

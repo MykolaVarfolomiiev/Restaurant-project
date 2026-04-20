@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation Request — Alchemy</title>
+    <link th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <nav th:replace="~{nav :: navbar}"></nav>
+</header>
+
+<div class="page-header">
+    <h1>Reservation Request</h1>
+    <div class="sub">Detail</div>
+    <div class="gold-line"></div>
+</div>
+
+<div class="content-area">
+    <div style="display:flex; justify-content:flex-end; margin-bottom:24px;">
+        <a th:href="@{/reservations}" class="btn-alchemy-outline">← Back to List</a>
+    </div>
+
+    <div th:if="${actionMessage != null}"
+         class="alchemy-alert"
+         th:classappend="${actionMessageType == 'danger' ? '-danger' : (actionMessageType == 'success' ? '-success' : '')}"
+         th:text="${actionMessage}">Message</div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+
+        <!-- Guest -->
+        <div class="alchemy-card">
+            <div class="alchemy-card-title">Guest</div>
+            <div class="alchemy-card-row">
+                <div class="alchemy-card-label">Name</div>
+                <div class="alchemy-card-value" th:text="${reservationRequest.firstName + ' ' + reservationRequest.lastName}">—</div>
+            </div>
+            <div class="alchemy-card-row">
+                <div class="alchemy-card-label">Email</div>
+                <div class="alchemy-card-value" th:text="${reservationRequest.email}">—</div>
+            </div>
+            <div class="alchemy-card-row">
+                <div class="alchemy-card-label">Group Size</div>
+                <div class="alchemy-card-value" th:text="${reservationRequest.groupSize}">—</div>
+            </div>
+            <div class="alchemy-card-row">
+                <div class="alchemy-card-label">Status</div>
+                <div class="alchemy-card-value" th:text="${reservationRequest.status}">—</div>
+            </div>
+            <div class="alchemy-card-row" th:if="${reservationRequest.tableId != null}">
+                <div class="alchemy-card-label">Table</div>
+                <div class="alchemy-card-value" th:text="${tableNamesById.get(reservationRequest.tableId)}">Table</div>
+            </div>
+            <div class="alchemy-card-row">
+                <div class="alchemy-card-label">Reference</div>
+                <div class="alchemy-card-value" style="font-family:monospace; font-size:0.82rem;" th:text="${reservationRequest.uuid}">—</div>
+            </div>
+            <div class="alchemy-card-row">
+                <div class="alchemy-card-label">Submitted</div>
+                <div class="alchemy-card-value" th:text="${reservationRequest.createdAt != null ? #temporals.format(reservationRequest.createdAt, 'MMM d, yyyy h:mm a') : '—'}">—</div>
+            </div>
+        </div>
+
+        <!-- Event + Seating -->
+        <div>
+            <div class="alchemy-card" style="margin-bottom:16px;">
+                <div class="alchemy-card-title">Event</div>
+                <div class="alchemy-card-row">
+                    <div class="alchemy-card-label">Name</div>
+                    <div class="alchemy-card-value" th:text="${event.name}">—</div>
+                </div>
+                <div class="alchemy-card-row">
+                    <div class="alchemy-card-label">Dates</div>
+                    <div class="alchemy-card-value">
+                        <span th:text="${#temporals.format(event.startDate, 'MMM d, yyyy')}">—</span> —
+                        <span th:text="${#temporals.format(event.endDate, 'MMM d, yyyy')}">—</span>
+                    </div>
+                </div>
+                <div class="alchemy-card-row" th:if="${event.eventDescription != null and !event.eventDescription.isBlank()}">
+                    <div class="alchemy-card-label">Details</div>
+                    <div class="alchemy-card-value" th:text="${event.eventDescription}">—</div>
+                </div>
+                <div class="alchemy-card-row" th:if="${event.price != null}">
+                    <div class="alchemy-card-label">Price</div>
+                    <div class="alchemy-card-value" th:text="${'$' + #numbers.formatDecimal(event.price, 1, 2)}">—</div>
+                </div>
+            </div>
+
+            <div class="alchemy-card">
+                <div class="alchemy-card-title">Seating</div>
+                <div class="alchemy-card-row">
+                    <div class="alchemy-card-label">Name</div>
+                    <div class="alchemy-card-value" th:text="${seating.name}">—</div>
+                </div>
+                <div class="alchemy-card-row">
+                    <div class="alchemy-card-label">Start</div>
+                    <div class="alchemy-card-value" th:text="${#temporals.format(seating.startDateTime, 'MMM d, yyyy h:mm a')}">—</div>
+                </div>
+                <div class="alchemy-card-row">
+                    <div class="alchemy-card-label">Duration</div>
+                    <div class="alchemy-card-value" th:text="${seating.durationMinutes + ' minutes'}">—</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Approve / Deny -->
+    <div class="alchemy-card" style="margin-top:20px; max-width:100%;">
+        <div class="alchemy-card-title">Approve / Deny</div>
+
+        <div th:if="${reservationRequest.status.name() == 'APPROVED'}" class="alchemy-alert">
+            This reservation is approved and cannot be changed.
+        </div>
+
+        <div th:if="${reservationRequest.status.name() != 'APPROVED'}">
+            <form th:action="@{/reservations/{id}/approve(id=${reservationRequest.id})}" method="post"
+                  style="display:flex; gap:16px; align-items:flex-end; flex-wrap:wrap;">
+                <div style="flex:1; min-width:220px;">
+                    <label class="form-label" for="tableId">Select Table to Approve <span style="color:#8b2121;">*</span></label>
+                    <select class="form-select" id="tableId" name="tableId" required>
+                        <option value="">Select a table...</option>
+                        <option th:each="tid : ${seating.tableIds}"
+                                th:value="${tid}"
+                                th:selected="${reservationRequest.tableId != null and reservationRequest.tableId == tid}"
+                                th:text="${tableNamesById.get(tid)}">Table</option>
+                    </select>
+                    <div class="form-hint">A table can only be assigned once per seating.</div>
+                </div>
+                <div class="btn-row">
+                    <button type="submit" class="btn-alchemy-success">Approve</button>
+                    <button type="submit"
+                            th:formaction="@{/reservations/{id}/deny(id=${reservationRequest.id})}"
+                            class="btn-alchemy-danger">Deny</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div th:replace="~{partial :: footer}"></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Menus — Alchemy</title>
+    <link th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <nav th:replace="~{nav :: navbar}"></nav>
+</header>
+
+<div class="page-header">
+    <h1>Menus</h1>
+    <div class="sub">Manage</div>
+    <div class="gold-line"></div>
+</div>
+
+<div class="content-area">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:20px;">
+        <span class="section-label">All Menus</span>
+<!--        <a th:href="@{/event/menu/create}" class="btn-alchemy-primary">+ Create Menu</a>-->
+    </div>
+
+    <form th:action="@{/event/menu}" method="get" class="list-search" style="margin-bottom:28px;">
+        <div>
+            <label class="form-label" for="search">Search menus</label>
+            <input id="search" name="search" type="text" class="form-control"
+                   th:value="${search}" placeholder="Search by menu name">
+        </div>
+        <div style="display:flex; gap:8px; align-items:flex-end;">
+            <button type="submit" class="btn-alchemy-primary">Search</button>
+            <a th:href="@{/event/menu}" class="btn-alchemy-outline">Clear</a>
+<!--            <a th:href="@{/event/menu/create}" class="btn-alchemy-primary" style="margin-left:auto;">+ Create Menu</a>-->
+        </div>
+        <div style="margin-left:auto;">
+            <a th:href="@{/event/menu/create}" class="btn-alchemy-primary">+ Create Menu</a>
+        </div>
+    </form>
+
+    <div th:replace="~{menu/fragments :: list}"></div>
+</div>
+
+<footer>
+    <div th:replace="~{partial :: footer}"></div>
+</footer>
+</body>
+</html>

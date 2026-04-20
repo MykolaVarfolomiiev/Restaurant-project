@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Event — Alchemy</title>
+    <link th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <nav th:replace="~{nav :: navbar}"></nav>
+</header>
+
+<div class="page-header">
+    <h1>Edit Event</h1>
+    <div class="sub">Events</div>
+    <div class="gold-line"></div>
+</div>
+
+<div class="content-area">
+    <form th:action="@{/event/edit/{id}(id=${event.id})}" th:object="${event}" method="post" class="alchemy-form-wide">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{version}">
+
+        <div th:if="${#fields.hasGlobalErrors()}" class="alchemy-alert-danger">
+            <div th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="name">Name</label>
+            <input id="name" type="text" th:field="*{name}" class="form-control">
+            <div class="form-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="eventDescription">Description</label>
+            <textarea id="eventDescription" th:field="*{eventDescription}" class="form-control" rows="4"></textarea>
+            <div class="form-error" th:if="${#fields.hasErrors('eventDescription')}" th:errors="*{eventDescription}"></div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+            <div class="form-group">
+                <label class="form-label" for="startDate">Start Date</label>
+                <input id="startDate" type="date" th:field="*{startDate}" class="form-control">
+                <div class="form-error" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="endDate">End Date</label>
+                <input id="endDate" type="date" th:field="*{endDate}" class="form-control">
+                <div class="form-error" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="durationInMinutes">Duration (minutes)</label>
+                <input id="durationInMinutes" type="number" th:field="*{durationInMinutes}" class="form-control">
+                <div class="form-error" th:if="${#fields.hasErrors('durationInMinutes')}" th:errors="*{durationInMinutes}"></div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="price">Price</label>
+                <input id="price" type="number" step="0.01" th:field="*{price}" class="form-control">
+                <div class="form-error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <a th:href="@{/seatings/create(eventId=${event.id})}" class="btn-alchemy-success">+ Add Seatings</a>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label" for="existingMenuId">Attach Menu</label>
+            <select id="existingMenuId"
+                    name="existingMenuId"
+                    class="form-select"
+                    onchange="toggleActiveState()">
+                <option value="">-- No menu --</option>
+                <option th:each="m : ${availableMenus}"
+                        th:value="${m.id}"
+                        th:text="${m.name}"
+                        th:selected="${selectedMenuId != null and selectedMenuId == m.id}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-check form-switch mb-3">
+            <input id="isActive"
+                   type="checkbox"
+                   th:field="*{isActive}"
+                   class="form-check-input"
+                   role="switch"
+                   th:disabled="${selectedMenuId == null}">
+
+            <input type="hidden"
+                   name="isActive"
+                   value="false"
+                   th:if="${selectedMenuId == null}">
+
+            <label class="form-check-label" for="isActive">Active</label>
+            <div class="text-danger" th:if="${#fields.hasErrors('isActive')}" th:errors="*{isActive}"></div>
+            <small class="text-muted d-block mt-1"
+                   th:if="${selectedMenuId == null}">
+                Add a menu to make the event active.
+            </small>
+        </div>
+
+        <div class="btn-row">
+            <button type="submit" class="btn-alchemy-edit">Save Changes</button>
+            <a th:href="@{/event}" class="btn-alchemy-outline">Back To List</a>
+        </div>
+    </form>
+</div>
+
+<footer>
+    <div th:replace="~{partial :: footer}"></div>
+</footer>
+
+<script>
+    function toggleActiveState() {
+        const menuSelect = document.getElementById('existingMenuId');
+        const activeToggle = document.getElementById('isActive');
+        if (!menuSelect || !activeToggle) return;
+        const hasMenu = menuSelect.value !== '';
+        activeToggle.disabled = !hasMenu;
+        if (!hasMenu) {
+            activeToggle.checked = false;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuSelect = document.getElementById('existingMenuId');
+        const activeToggle = document.getElementById('isActive');
+        if (!menuSelect || !activeToggle) return;
+        // Only disable on an initial load, don't uncheck
+        const hasMenu = menuSelect.value !== '';
+        activeToggle.disabled = !hasMenu;
+    });
+</script>
+</body>
+</html>

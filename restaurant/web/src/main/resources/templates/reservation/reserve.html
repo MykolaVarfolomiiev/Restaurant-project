@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Request a Reservation — Alchemy</title>
+    <link th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <nav th:replace="~{nav :: navbar}"></nav>
+</header>
+
+<div class="page-header">
+    <h1>Reserve a Table</h1>
+    <div class="sub">Request a Reservation</div>
+    <div class="gold-line"></div>
+</div>
+
+<div class="content-area">
+
+    <div th:if="${reservationSubmitted}" class="alchemy-alert-success">
+        Thank you! Your reservation request was submitted. Your reference code is:
+        <strong th:text="${reservationUuid}">uuid</strong>
+        <div style="margin-top:6px; font-size:0.85rem;">Status: <strong>Pending</strong> — we will contact you by email.</div>
+        <div style="margin-top:8px;">
+            <a th:href="@{/reserve/track(uuid=${reservationUuid})}" style="color:#1e5c2e; font-weight:600;">View &amp; track this reservation →</a>
+        </div>
+    </div>
+
+    <!-- Event info card -->
+    <div th:if="${events != null and !events.isEmpty()}" class="alchemy-card" style="margin-bottom:28px;">
+        <div class="alchemy-card-title">Event &amp; Menu Information</div>
+        <p style="font-size:0.85rem; color:#aaa; margin-bottom:16px;">Select an event to see details and pricing.</p>
+
+        <div id="eventRadios">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <label class="form-label" style="margin:0;">Event <span style="color:#8b2121;">*</span></label>
+                <input type="search" class="form-control" id="eventSearch" placeholder="Search events…"
+                       autocomplete="off" style="max-width:200px;"/>
+            </div>
+            <div th:each="ev : ${events}" class="event-filter-row"
+                 style="padding:7px 0; border-bottom:1px solid #f5f5f5; display:flex; align-items:center; gap:10px;">
+                <input class="form-check-input event-radio" type="radio" name="eventFilter" th:value="${ev.id}"
+                       th:id="|event-${ev.id}|"/>
+                <label style="font-size:0.93rem; cursor:pointer;" th:for="|event-${ev.id}|" th:text="${ev.name}">Event</label>
+            </div>
+        </div>
+
+        <div th:each="ev : ${events}" class="event-detail-block d-none"
+             th:id="'event-detail-' + ${ev.id}"
+             style="margin-top:16px; padding:16px; background:#f7f5f2; border-radius:2px;">
+            <strong style="font-family:'Playfair Display',serif;" th:text="${ev.name}">Event name</strong>
+            <div style="font-size:0.88rem; color:#666; margin-top:8px;">
+                <div><strong>Dates:</strong> <span th:text="${ev.startDateFormatted}">start</span> — <span th:text="${ev.endDateFormatted}">end</span></div>
+                <div th:if="${ev.durationInMinutes != null}"><strong>Duration:</strong> <span th:text="${ev.durationInMinutes + ' minutes'}">90</span></div>
+                <div th:if="${ev.price != null}"><strong>Price:</strong> <span th:text="${'$' + #numbers.formatDecimal(ev.price, 1, 2)}">$0.00</span></div>
+                <div th:if="${ev.eventDescription != null and !ev.eventDescription.isBlank()}" style="margin-top:8px;" th:text="${ev.eventDescription}">Description</div>
+                <div th:if="${ev.eventDescription == null or ev.eventDescription.isBlank()}" style="margin-top:8px; color:#aaa;">Full menu details will be shared closer to the event.</div>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${events == null or events.isEmpty()}" class="alchemy-alert-info">
+        There are no upcoming events open for reservations right now. Please check back later.
+    </div>
+
+    <!-- Reservation form -->
+    <div th:if="${events != null and !events.isEmpty() and seatings != null and !seatings.isEmpty()}" class="alchemy-card">
+        <div class="alchemy-card-title">Your Request</div>
+        <form th:action="@{/reserve}" method="post" th:object="${reservationRequest}" id="reserveForm" class="alchemy-form-wide" style="max-width:100%;">
+
+            <div class="form-group">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <label class="form-label" style="margin:0;">Seating <span style="color:#8b2121;">*</span></label>
+                    <input type="search" class="form-control" id="seatingSearch" placeholder="Search seatings…"
+                           autocomplete="off" style="max-width:200px;"/>
+                </div>
+                <div th:each="s : ${seatings}" class="seating-row"
+                     th:attr="data-event-id=${s.eventId}"
+                     style="padding:7px 0; border-bottom:1px solid #f5f5f5; display:flex; align-items:center; gap:10px;">
+                    <input class="form-check-input seating-radio" type="radio" th:field="*{seatingId}" th:value="${s.id}"
+                           th:id="|seat-${s.id}|"/>
+                    <label style="font-size:0.93rem; cursor:pointer;" th:for="|seat-${s.id}|"
+                           th:text="${s.name + ' — ' + #temporals.format(s.startDateTime, 'MMM d, yyyy h:mm a')}">Seating</label>
+                </div>
+                <div class="form-error" th:if="${#fields.hasErrors('seatingId')}" th:errors="*{seatingId}"></div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                <div class="form-group">
+                    <label class="form-label">First Name <span style="color:#8b2121;">*</span></label>
+                    <input type="text" th:field="*{firstName}" class="form-control" required maxlength="255"/>
+                    <div class="form-error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Last Name <span style="color:#8b2121;">*</span></label>
+                    <input type="text" th:field="*{lastName}" class="form-control" required maxlength="255"/>
+                    <div class="form-error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Email <span style="color:#8b2121;">*</span></label>
+                <input type="email" th:field="*{email}" class="form-control" required maxlength="255"/>
+                <div class="form-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Group Size <span style="color:#8b2121;">*</span></label>
+                <input type="number" th:field="*{groupSize}" class="form-control" required min="1" value="1" style="max-width:120px;"/>
+                <div class="form-error" th:if="${#fields.hasErrors('groupSize')}" th:errors="*{groupSize}"></div>
+            </div>
+
+            <div class="btn-row" style="margin-top:8px;">
+                <a th:href="@{/}" class="btn-alchemy-outline">Cancel</a>
+                <button type="submit" class="btn-alchemy-gold">Submit Request</button>
+            </div>
+        </form>
+    </div>
+
+    <div th:if="${events != null and !events.isEmpty() and (seatings == null or seatings.isEmpty())}" class="alchemy-alert-info">
+        No seatings are available for reservation yet. Please try another event or check back later.
+    </div>
+</div>
+
+<footer>
+    <div th:replace="~{partial :: footer}"></div>
+</footer>
+
+<script>
+    (function () {
+        var eventRadios = document.getElementById('eventRadios');
+        var eventSearch = document.getElementById('eventSearch');
+        var seatingSearch = document.getElementById('seatingSearch');
+
+        function selectedEventId() {
+            if (!eventRadios) return '';
+            var r = eventRadios.querySelector('input.event-radio[type="radio"]:checked');
+            return r ? r.value : '';
+        }
+
+        function syncEventPanels() {
+            if (!eventRadios) return;
+            var id = selectedEventId();
+            document.querySelectorAll('.event-detail-block').forEach(function (el) { el.classList.add('d-none'); });
+            if (id) {
+                var panel = document.getElementById('event-detail-' + id);
+                if (panel) panel.classList.remove('d-none');
+            }
+        }
+
+        function filterSeatings() {
+            var eventId = selectedEventId();
+            var q = seatingSearch ? seatingSearch.value.trim().toLowerCase() : '';
+            document.querySelectorAll('.seating-row').forEach(function (row) {
+                var eid = row.getAttribute('data-event-id');
+                var matchEvent = !eventId || eid === eventId;
+                var label = row.querySelector('label');
+                var text = label ? label.textContent.toLowerCase() : '';
+                var matchSearch = !q || text.indexOf(q) !== -1;
+                var visible = matchEvent && matchSearch;
+                row.classList.toggle('d-none', !visible);
+                if (!visible) {
+                    var radio = row.querySelector('input.seating-radio[type="radio"]');
+                    if (radio && radio.checked) radio.checked = false;
+                }
+            });
+        }
+
+        if (eventRadios) {
+            if (eventSearch) {
+                eventSearch.addEventListener('input', function () {
+                    var q = eventSearch.value.trim().toLowerCase();
+                    eventRadios.querySelectorAll('.event-filter-row').forEach(function (row) {
+                        var label = row.querySelector('label');
+                        var text = label ? label.textContent.toLowerCase() : '';
+                        row.classList.toggle('d-none', q.length > 0 && text.indexOf(q) === -1);
+                    });
+                });
+            }
+            eventRadios.addEventListener('change', function (e) {
+                if (e.target && e.target.classList.contains('event-radio')) {
+                    syncEventPanels();
+                    filterSeatings();
+                }
+            });
+        }
+
+        if (seatingSearch) seatingSearch.addEventListener('input', filterSeatings);
+
+        document.getElementById('reserveForm')?.addEventListener('submit', function (e) {
+            var ev = selectedEventId();
+            var checked = document.querySelector('input.seating-radio[type="radio"]:checked');
+            if (!ev) { e.preventDefault(); alert('Please select an event.'); return false; }
+            if (!checked) { e.preventDefault(); alert('Please select a seating.'); return false; }
+            var row = checked.closest('.seating-row');
+            if (!row || row.getAttribute('data-event-id') !== ev) {
+                e.preventDefault(); alert('Please select a seating that belongs to the chosen event.'); return false;
+            }
+        });
+
+        syncEventPanels();
+        filterSeatings();
+    })();
+</script>
+</body>
+</html>

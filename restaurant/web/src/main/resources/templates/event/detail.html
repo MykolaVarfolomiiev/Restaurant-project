@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Details — Alchemy</title>
+    <link th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <nav th:replace="~{nav :: navbar}"></nav>
+</header>
+
+<div class="page-header">
+    <h1>Event Details</h1>
+    <div class="sub">View</div>
+    <div class="gold-line"></div>
+</div>
+
+<div class="content-area">
+    <div class="alchemy-card" style="max-width:600px; margin-bottom:28px;">
+        <div class="alchemy-card-title">Event Information</div>
+        <div class="alchemy-card-row">
+            <span class="alchemy-card-label">Name</span>
+            <span class="alchemy-card-value" th:text="${event.name}"></span>
+        </div>
+        <div class="alchemy-card-row">
+            <span class="alchemy-card-label">Description</span>
+            <span class="alchemy-card-value" th:text="${event.eventDescription}"></span>
+        </div>
+        <div class="alchemy-card-row">
+            <span class="alchemy-card-label">Start Date</span>
+            <span class="alchemy-card-value" th:text="${event.getStartDateFormatted()}"></span>
+        </div>
+        <div class="alchemy-card-row">
+            <span class="alchemy-card-label">End Date</span>
+            <span class="alchemy-card-value" th:text="${event.getEndDateFormatted()}"></span>
+        </div>
+        <div class="alchemy-card-row">
+            <span class="alchemy-card-label">Price</span>
+            <span class="alchemy-card-value" th:text="'$' + ${event.price}"></span>
+        </div>
+        <div class="alchemy-card-row">
+            <span class="alchemy-card-label">Created</span>
+            <span class="alchemy-card-value" th:text="${event.getCreatedAtFormatted()}"></span>
+        </div>
+        <div class="alchemy-card-row">
+            <span class="alchemy-card-label">Last Updated</span>
+            <span class="alchemy-card-value" th:text="${event.getUpdatedAtFormatted()}"></span>
+        </div>
+    </div>
+
+    <div class="btn-row">
+        <a th:href="@{/event}" class="btn-alchemy-outline">Back to List</a>
+        <a th:href="@{/reservations(eventId=${event.id},status='APPROVED')}" class="btn-alchemy-outline">Confirmed Reservations</a>
+        <a th:href="@{/event/edit/{id}(id=${event.id})}" class="btn-alchemy-edit">Edit</a>
+        <a th:href="@{/event/delete/{id}(id=${event.id})}" class="btn-alchemy-danger">Delete</a>
+    </div>
+</div>
+
+<footer>
+    <div th:replace="~{partial :: footer}"></div>
+</footer>
+</body>
+</html>

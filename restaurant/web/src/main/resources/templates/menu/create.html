@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>Create Menu — Alchemy</title>
+</head>
+<body>
+<header>
+    <nav th:replace="~{nav :: navbar}"></nav>
+</header>
+
+<div class="page-header">
+    <h1>Create Menu</h1>
+    <div class="sub">New</div>
+    <div class="gold-line"></div>
+</div>
+
+<div class="content-area">
+    <th:block th:if="${event != null and event.id != null}">
+        <div class="alchemy-form">
+            <form method="post"
+                  th:action="@{/event/{eventId}/menu/create-new(eventId=${event.id})}"
+                  th:object="${menu}">
+                <div th:replace="~{menu/fragments :: input}"></div>
+                <div class="btn-row" style="margin-top:24px;">
+                    <button type="submit" class="btn-alchemy-primary">Create Menu</button>
+                    <a th:href="@{/event/menu}" class="btn-alchemy-outline">Cancel</a>
+                </div>
+            </form>
+        </div>
+
+        <div style="margin-top:40px; padding-top:32px; border-top:1px solid #e8e8e8;">
+            <div class="section-label" style="margin-bottom:16px;">Or Attach an Existing Menu</div>
+            <form method="post"
+                  th:action="@{/event/{eventId}/menu/attach-existing(eventId=${event.id})}">
+                <div class="alchemy-form">
+                    <div class="form-group">
+                        <label class="form-label" for="menuId">Select Menu</label>
+                        <select id="menuId" name="menuId" class="form-select">
+                            <option th:each="m : ${availableMenus}"
+                                    th:value="${m.id}"
+                                    th:text="${m.name}">
+                            </option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-alchemy-outline">Attach Menu</button>
+                </div>
+            </form>
+        </div>
+    </th:block>
+
+    <th:block th:unless="${event != null and event.id != null}">
+        <div class="alchemy-form">
+            <form method="post" th:action="@{/event/menu/create}" th:object="${menu}">
+                <div th:replace="~{menu/fragments :: input}"></div>
+                <div class="btn-row" style="margin-top:24px;">
+                    <button type="submit" class="btn-alchemy-primary">Create Menu</button>
+                    <a th:href="@{/event/menu}" class="btn-alchemy-outline">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </th:block>
+</div>
+
+<footer>
+    <div th:replace="~{partial :: footer}"></div>
+</footer>
+</body>
+</html>

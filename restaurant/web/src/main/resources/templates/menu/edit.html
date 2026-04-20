@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>Edit Menu — Alchemy</title>
+</head>
+<body>
+<header>
+    <nav th:replace="~{nav :: navbar}"></nav>
+</header>
+
+<!--*@thymesVar id="menuItemListViewModel" type="nbcc.resto.viewmodels.MenuItemListViewModel"*-->
+<!--*@thymesVar id="availableMenuItemListViewModel" type="nbcc.resto.viewmodels.MenuItemListViewModel"*-->
+
+<div class="page-header">
+    <h1>Edit Menu</h1>
+    <div class="sub">Update</div>
+    <div class="gold-line"></div>
+</div>
+
+<div class="content-area">
+    <div class="alchemy-form-wide">
+        <form method="post" th:action="@{/event/menu/edit}" th:object="${menu}">
+            <div th:replace="~{menu/fragments :: input}"></div>
+
+            <th:block th:if="${menuItemListViewModel != null}">
+                <div th:if="${!menuItemListViewModel.isEmpty()}"
+                     th:replace="~{menuitem/fragments :: menuItemList}">
+                </div>
+            </th:block>
+
+            <div class="btn-row" style="margin-top:28px;">
+                <input type="submit" value="Save Changes" class="btn-alchemy-edit"/>
+                <a th:href="@{/event/menu}" class="btn-alchemy-outline">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer>
+    <div th:replace="~{partial :: footer}"></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Table — Alchemy</title>
+    <link th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <nav th:replace="~{nav :: navbar}"></nav>
+</header>
+
+<div class="page-header">
+    <h1>Delete Table</h1>
+    <div class="sub">Dining Tables</div>
+    <div class="gold-line"></div>
+</div>
+
+<div class="content-area">
+    <div class="alchemy-alert-danger">
+        You are about to permanently delete this dining table. This action cannot be undone.
+    </div>
+
+    <div class="alchemy-card" style="max-width:480px;">
+        <div class="alchemy-card-title">Table Details</div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">Table Name</div>
+            <div class="alchemy-card-value" th:text="${table.name}">The Garden Room</div>
+        </div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">Capacity</div>
+            <div class="alchemy-card-value" th:text="${table.capacity + ' guests'}">6 guests</div>
+        </div>
+    </div>
+
+    <form th:action="@{/tables/delete/{id}(id=${table.id})}" method="post" class="btn-row" style="margin-top:24px;">
+        <a th:href="@{/tables}" class="btn-alchemy-outline">Cancel</a>
+        <button type="submit" class="btn-alchemy-danger">Confirm Delete</button>
+    </form>
+</div>
+
+<footer>
+    <div th:replace="~{partial :: footer}"></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="resto-api" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="app-rest-api" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="nbcc.resto.RestaurantApiApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

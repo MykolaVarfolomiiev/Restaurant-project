@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>Menu Item Details — Alchemy</title>
+</head>
+<body>
+<header>
+    <nav th:replace="~{nav :: navbar}"></nav>
+</header>
+
+<div class="page-header">
+    <h1>Menu Item Details</h1>
+    <div class="sub">View</div>
+    <div class="gold-line"></div>
+</div>
+
+<div class="content-area">
+    <div class="alchemy-card" style="max-width:560px; margin-bottom:28px;">
+        <div th:replace="~{menuitem/fragments :: details}"></div>
+    </div>
+
+    <div class="btn-row">
+        <a th:href="@{/event/menu/edit/{id}(id=${menu.id})}" class="btn-alchemy-outline">Back</a>
+    </div>
+</div>
+
+<footer>
+    <div th:replace="~{partial :: footer}"></div>
+</footer>
+</body>
+</html>

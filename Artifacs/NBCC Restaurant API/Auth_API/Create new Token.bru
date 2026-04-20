@@ -1,0 +1,86 @@
+meta {
+  name: Create new Token
+  type: http
+  seq: 2
+  tags: [
+    Auth_API
+  ]
+}
+
+post {
+  url: {{baseUrl}}/api/auth/token
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "andre",
+    "password": "nbcc"
+  }
+}
+
+vars:pre-request {
+  baseUrl: http://localhost:8081
+}
+
+example {
+  name: 200 Response
+  description: OK
+  
+  request: {
+    url: {{baseUrl}}/api/auth/token
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "username": "",
+        "password": ""
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: */*
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: text
+      content: '''
+        {
+          "authenticated": false,
+          "invalid": false,
+          "validationErrors": [
+            {
+              "field": "",
+              "message": "",
+              "value": ""
+            }
+          ],
+          "successful": false,
+          "value": {
+            "userName": "",
+            "expiresIn": 0,
+            "token": "",
+            "tokenType": "",
+            "claims": {
+              "id": 0,
+              "email": "",
+              "userName": "",
+              "empty": false
+            },
+            "name": ""
+          },
+          "empty": false,
+          "error": false
+        }
+      '''
+    }
+  }
+}

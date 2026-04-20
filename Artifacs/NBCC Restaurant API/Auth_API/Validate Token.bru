@@ -1,0 +1,69 @@
+meta {
+  name: Validate Token
+  type: http
+  seq: 1
+  tags: [
+    Auth_API
+  ]
+}
+
+post {
+  url: {{baseUrl}}/api/auth/validate
+  body: json
+  auth: none
+}
+
+body:json {
+  {{token}}
+}
+
+example {
+  name: 200 Response
+  description: OK
+  
+  request: {
+    url: {{baseUrl}}/api/auth/validate
+    method: POST
+    mode: json
+    body:json: {
+      {}
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: */*
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: text
+      content: '''
+        {
+          "authenticated": false,
+          "invalid": false,
+          "validationErrors": [
+            {
+              "field": "",
+              "message": "",
+              "value": ""
+            }
+          ],
+          "successful": false,
+          "value": {
+            "id": 0,
+            "email": "",
+            "userName": "",
+            "empty": false
+          },
+          "empty": false,
+          "error": false
+        }
+      '''
+    }
+  }
+}

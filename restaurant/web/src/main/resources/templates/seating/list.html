@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Seatings — Alchemy</title>
+    <link th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <nav th:replace="~{nav :: navbar}"></nav>
+</header>
+
+<div class="page-header">
+    <h1>Seatings</h1>
+    <div class="sub">Manage</div>
+    <div class="gold-line"></div>
+</div>
+
+<div class="content-area">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:30px;">
+        <span class="section-label">All Seatings</span>
+        <a th:href="@{/seatings/create}" class="btn-alchemy-primary">+ Create Seating</a>
+    </div>
+
+    <div th:each="entry : ${eventsWithSeatings}" style="margin-bottom:44px;">
+        <div style="font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:600; color:#1a1a1a; padding-bottom:10px; border-bottom:2px solid #2c4a3e; margin-bottom:0;"
+             th:text="${entry.key.name}">Event Name</div>
+
+        <table class="alchemy-table">
+            <thead>
+                <tr>
+                    <th>Seating Name</th>
+                    <th>Start Date &amp; Time</th>
+                    <th>Duration</th>
+                    <th>Tables</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="seating : ${entry.value}">
+                    <td>
+                        <a th:href="@{/seatings/edit/{id}(id=${seating.id})}"
+                           th:text="${seating.name}"
+                           class="table-link">Evening Service</a>
+                    </td>
+                    <td th:text="${#temporals.format(seating.startDateTime, 'MMM d, yyyy — h:mm a')}">Jan 1, 2025 — 7:00 PM</td>
+                    <td th:text="${seating.durationMinutes + ' min'}">90 min</td>
+                    <td>
+                        <span th:each="tableId, iterStat : ${seating.tableIds}"
+                              th:text="${(iterStat.first ? '' : ', ') + tableNamesById.get(tableId)}">Table 1</span>
+                    </td>
+                    <td>
+                        <div class="btn-row" style="justify-content:flex-end;">
+                            <a th:href="@{/seatings/edit/{id}(id=${seating.id})}" class="btn-alchemy-edit">Edit</a>
+                            <a th:href="@{/seatings/delete/{id}(id=${seating.id})}" class="btn-alchemy-danger">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(entry.value)}" class="empty-row">
+                    <td colspan="5">No seatings for this event yet.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${#maps.isEmpty(eventsWithSeatings)}" class="alchemy-alert-info">
+        No events found. Create an event first to add seatings.
+    </div>
+</div>
+
+<footer>
+    <div th:replace="~{partial :: footer}"></div>
+</footer>
+</body>
+</html>

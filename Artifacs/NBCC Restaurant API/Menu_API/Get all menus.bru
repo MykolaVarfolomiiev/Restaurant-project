@@ -1,0 +1,67 @@
+meta {
+  name: Get all menus
+  type: http
+  seq: 1
+  tags: [
+    Menu_API
+  ]
+}
+
+get {
+  url: {{baseUrl}}/api/menu
+  body: none
+  auth: none
+}
+
+example {
+  name: 200 Response
+  description: OK
+  
+  request: {
+    url: {{baseUrl}}/api/menu
+    method: GET
+    mode: none
+  }
+  
+  response: {
+    headers: {
+      Content-Type: */*
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: text
+      content: '''
+        {
+          "value": [
+            {
+              "id": 0,
+              "name": "",
+              "description": "",
+              "createdAt": "",
+              "version": 0,
+              "menuItems": [
+                {
+                  "id": 0,
+                  "name": "",
+                  "description": "",
+                  "version": 0,
+                  "menuId": 0
+                }
+              ],
+              "popUpEventId": 0,
+              "createdAtFormatted": ""
+            }
+          ],
+          "empty": false,
+          "error": false,
+          "successful": false
+        }
+      '''
+    }
+  }
+}

@@ -1,0 +1,103 @@
+meta {
+  name: Get all events
+  type: http
+  seq: 1
+  tags: [
+    Event_API
+  ]
+}
+
+get {
+  url: {{baseUrl}}/api/event
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  baseUrl: http://localhost:8081
+}
+
+example {
+  name: 200 Response
+  description: OK
+  
+  request: {
+    url: {{baseUrl}}/api/event
+    method: GET
+    mode: none
+  }
+  
+  response: {
+    headers: {
+      Content-Type: */*
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: text
+      content: '''
+        {
+          "value": [
+            {
+              "id": 0,
+              "name": "",
+              "eventDescription": "",
+              "startDate": "",
+              "endDate": "",
+              "durationInMinutes": 0,
+              "price": 0,
+              "isActive": false,
+              "isArchived": false,
+              "version": 0,
+              "createdAt": "",
+              "updatedAt": "",
+              "seatings": [
+                {
+                  "id": 0,
+                  "eventId": 0,
+                  "name": "",
+                  "startDateTime": "",
+                  "durationMinutes": 0,
+                  "createdDate": "",
+                  "updatedAt": "",
+                  "archived": false,
+                  "tableIds": [],
+                  "endDateTime": ""
+                }
+              ],
+              "menu": {
+                "id": 0,
+                "name": "",
+                "description": "",
+                "createdAt": "",
+                "version": 0,
+                "menuItems": [
+                  {
+                    "id": 0,
+                    "name": "",
+                    "description": "",
+                    "version": 0,
+                    "menuId": 0
+                  }
+                ],
+                "popUpEventId": 0,
+                "createdAtFormatted": ""
+              },
+              "startDateFormatted": "",
+              "updatedAtFormatted": "",
+              "createdAtFormatted": "",
+              "endDateFormatted": ""
+            }
+          ],
+          "empty": false,
+          "error": false,
+          "successful": false
+        }
+      '''
+    }
+  }
+}

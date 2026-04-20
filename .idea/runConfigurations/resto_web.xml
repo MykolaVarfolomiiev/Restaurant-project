@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="resto-web" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="app-web" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="nbcc.resto.RestaurantWebApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

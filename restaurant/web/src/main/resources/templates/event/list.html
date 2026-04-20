@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Events — Alchemy</title>
+    <link th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <nav th:replace="~{nav :: navbar}"></nav>
+</header>
+
+<div class="page-header">
+    <h1>Events</h1>
+    <div class="sub">Manage</div>
+    <div class="gold-line"></div>
+</div>
+
+<div class="content-area">
+    <div style="margin-bottom:20px;">
+        <span class="section-label">All Events</span>
+    </div>
+
+    <!-- Search -->
+    <form th:action="@{/event}" method="get" class="list-search" style="margin-bottom:28px;">
+        <div>
+            <label class="form-label" for="name">Name</label>
+            <input id="name" name="name" type="text" class="form-control" th:value="${name}" placeholder="Search by name">
+        </div>
+        <div>
+            <label class="form-label" for="startDate">From</label>
+            <input id="startDate" name="startDate" type="date" class="form-control" th:value="${startDate}">
+        </div>
+        <div>
+            <label class="form-label" for="endDate">To</label>
+            <input id="endDate" name="endDate" type="date" class="form-control" th:value="${endDate}">
+        </div>
+        <div style="display:flex; gap:8px; align-items:flex-end;">
+            <button type="submit" class="btn-alchemy-primary">Search</button>
+            <a th:href="@{/event}" class="btn-alchemy-outline">Clear</a>
+        </div>
+    </form>
+
+    <div th:if="${viewModel.message != null}" class="alchemy-alert" th:text="${viewModel.message}"></div>
+
+    <div th:if="${viewModel.isEmpty()}" class="alchemy-alert-info">No events found.</div>
+
+    <table class="alchemy-table" th:if="${!viewModel.isEmpty()}">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="event : ${viewModel.popUpEvents}">
+                <td>
+                    <a th:href="@{/event/{eventId}(eventId=${event.id})}"
+                       th:text="${event.name}"
+                       class="table-link">Event Name</a>
+                </td>
+                <td th:text="${event.startDate}">2025-01-01</td>
+                <td th:text="${event.endDate}">2025-01-02</td>
+                <td th:text="'$' + ${event.price}">$0.00</td>
+                <td>
+                    <div class="btn-row" style="justify-content:flex-end; flex-wrap:wrap;">
+                        <a th:href="@{/reservations(eventId=${event.id},status='APPROVED')}" class="btn-alchemy-outline">Confirmed</a>
+                        <a th:if="${viewModel.canEdit}" th:href="@{/seatings/create(eventId=${event.id})}" class="btn-alchemy-success">+ Seatings</a>
+                        <a th:if="${viewModel.canEdit}" th:href="@{/event/edit/{id}(id=${event.id})}" class="btn-alchemy-edit">Edit</a>
+                        <a th:if="${viewModel.canDelete}" th:href="@{/event/delete/{id}(id=${event.id})}" class="btn-alchemy-danger">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <div th:replace="~{partial :: footer}"></div>
+</footer>
+</body>
+</html>

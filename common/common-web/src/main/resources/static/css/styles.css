@@ -1,0 +1,1073 @@
+/* =============================================
+   ALCHEMY BAR & GRILL — Global Stylesheet
+   ============================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-weight: 300;
+    background-color: #f5f0e8;
+    color: #2c2c2c;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.7;
+}
+
+/* Sticky footer layout */
+body > header { flex-shrink: 0; }
+body > .page-wrapper,
+body > div.container,
+body > div.container-fluid,
+body > main { flex: 1 0 auto; }
+body > footer { flex-shrink: 0; }
+
+h1, h2, h3, h4 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* =============================================
+   FONT CLASSES (keep existing for home.html)
+   ============================================= */
+
+.unifrakturcook-bold {
+    font-family: "UnifrakturCook", cursive;
+    font-weight: 700;
+}
+
+.manufacturing-consent-regular {
+    font-family: "Manufacturing Consent", system-ui;
+    font-weight: 400;
+}
+
+/* =============================================
+   NAVIGATION
+   ============================================= */
+
+.navbar {
+    background-color: #2c4a3e !important;
+    padding: 0.85rem 2rem !important;
+    border-bottom: none;
+}
+
+.navbar-brand {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-size: 1.55rem !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.navbar .nav-link {
+    font-family: 'Open Sans', Arial, sans-serif !important;
+    font-size: 0.75rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase !important;
+    color: rgba(255,255,255,0.82) !important;
+    padding: 0.4rem 0.9rem !important;
+    transition: color 0.2s;
+}
+
+.navbar .nav-link:hover {
+    color: #ffffff !important;
+}
+
+.navbar .btn-reserve {
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background-color: transparent;
+    color: #ffffff !important;
+    border: 1px solid rgba(255,255,255,0.7);
+    padding: 0.42rem 1.3rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.navbar .btn-reserve:hover {
+    background-color: rgba(255,255,255,0.12);
+    border-color: #ffffff;
+}
+
+.navbar .btn-nav-create {
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background-color: #b8860b;
+    color: #fff !important;
+    border: 1px solid #b8860b;
+    padding: 0.42rem 1.1rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.navbar .btn-nav-create:hover {
+    background-color: #9a700a;
+    border-color: #9a700a;
+    color: #fff !important;
+}
+
+.navbar .btn-outline-nav {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.82) !important;
+    border: 1px solid rgba(255,255,255,0.4);
+    padding: 0.38rem 0.9rem;
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.navbar .btn-outline-nav:hover {
+    border-color: #ffffff;
+    color: #ffffff !important;
+}
+
+.navbar-toggler { border-color: rgba(255,255,255,0.4) !important; }
+.navbar-toggler-icon { filter: invert(1); }
+
+.nav-username {
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+}
+
+/* =============================================
+   HERO
+   ============================================= */
+
+.page-wrapper { width: 100%; }
+
+.hero {
+    position: relative;
+    width: 100%;
+    height: 560px;
+    overflow: hidden;
+    background: #1a1a1a;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.65;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.25);
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    text-align: center;
+    color: white;
+    width: 100%;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.logo-circle {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: rgba(212,175,55,0.12);
+    border: 2px solid rgba(212,175,55,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.logo-circle img,
+.hero-logo {
+    width: 80px;
+    max-width: 30vw;
+    height: auto;
+}
+
+.hero-overlay h1 {
+    margin: 0;
+    font-size: 5rem;
+    letter-spacing: 6px;
+    font-weight: 500;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(0,0,0,0.6);
+}
+
+.hero-overlay h2 {
+    margin-top: 4px;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 4px;
+    text-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.hero-cta {
+    margin-top: 28px;
+    display: inline-block;
+    padding: 0.75rem 2.5rem;
+    background: #2c4a3e;
+    color: #fff;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    border-radius: 2px;
+    border: 1px solid rgba(255,255,255,0.5);
+    transition: all 0.2s;
+}
+
+.hero-cta:hover { background-color: rgba(44,74,62,0.8); color: #fff; border-color: #fff; }
+
+/* =============================================
+   ABOUT / HOME SECTIONS
+   ============================================= */
+
+.about-section {
+    padding: 70px 0;
+    background: #faf7f2;
+}
+
+.content-box {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.about-section h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.9rem;
+    margin-bottom: 22px;
+    color: #1a1a1a;
+}
+
+.about-content p {
+    font-size: 0.97rem;
+    line-height: 1.85;
+    margin-bottom: 18px;
+    color: #555;
+}
+
+.section-gold-line {
+    width: 50px;
+    height: 2px;
+    background: #2c4a3e;
+    margin: 14px 0 28px;
+}
+
+/* Chef section */
+.chef-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 36px;
+    margin-top: 10px;
+}
+
+.chef-image-wrap { flex: 0 0 240px; }
+
+.chef-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.chef-text { flex: 1; }
+.chef-text p { margin-top: 0; }
+
+/* =============================================
+   INNER PAGE HEADER
+   ============================================= */
+
+.page-header {
+    background: #2c4a3e;
+    padding: 48px 40px 42px;
+    text-align: center;
+}
+
+.page-header h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.page-header .sub {
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-top: 8px;
+}
+
+.page-header .gold-line {
+    width: 48px;
+    height: 2px;
+    background: rgba(255,255,255,0.4);
+    margin: 14px auto 0;
+}
+
+/* =============================================
+   CONTENT AREA
+   ============================================= */
+
+.content-area {
+    padding: 52px 40px 72px;
+    background: #faf7f2;
+    max-width: 1140px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.content-area .section-label {
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #2c4a3e;
+    margin-bottom: 8px;
+}
+
+/* =============================================
+   ALCHEMY TABLE (admin lists)
+   ============================================= */
+
+.alchemy-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.93rem;
+}
+
+.alchemy-table thead tr {
+    border-bottom: 2px solid #2c4a3e;
+}
+
+.alchemy-table thead th {
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #2c4a3e;
+    padding: 0 12px 13px 0;
+}
+
+.alchemy-table thead th:last-child { text-align: right; padding-right: 0; }
+
+.alchemy-table tbody tr { border-bottom: 1px solid #ddd; }
+.alchemy-table tbody tr:last-child { border-bottom: none; }
+.alchemy-table tbody tr:hover { background: rgba(44,74,62,0.04); }
+
+.alchemy-table tbody td {
+    padding: 16px 12px 16px 0;
+    color: #222;
+    vertical-align: middle;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.alchemy-table tbody td:last-child { text-align: right; padding-right: 0; }
+
+.alchemy-table .empty-row td {
+    color: #aaa;
+    font-style: italic;
+    padding: 30px 0;
+    text-align: center;
+}
+
+/* Clickable links inside tables */
+.table-link {
+    color: #2c4a3e;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(44,74,62,0.35);
+    transition: color 0.2s, text-decoration-color 0.2s;
+}
+
+.table-link:hover {
+    color: #1a2e28;
+    text-decoration-color: #2c4a3e;
+}
+
+/* =============================================
+   BUTTONS
+   ============================================= */
+
+.btn-alchemy-primary {
+    display: inline-block;
+    padding: 0.52rem 1.5rem;
+    background: #2c4a3e;
+    color: #fff;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: 2px solid #2c4a3e;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+.btn-alchemy-primary:hover { background: transparent; color: #2c4a3e; }
+
+.btn-alchemy-gold {
+    display: inline-block;
+    padding: 0.52rem 1.5rem;
+    background: #2c4a3e;
+    color: #fff;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: 2px solid #2c4a3e;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+.btn-alchemy-gold:hover { background: transparent; color: #2c4a3e; }
+
+/* Edit button — amber/yellow */
+.btn-alchemy-edit {
+    display: inline-block;
+    padding: 0.52rem 1.5rem;
+    background: #b8860b;
+    color: #fff;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: 2px solid #b8860b;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+.btn-alchemy-edit:hover { background: transparent; color: #b8860b; }
+
+.btn-alchemy-outline {
+    display: inline-block;
+    padding: 0.52rem 1.5rem;
+    background: #e8e4de;
+    color: #555;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: 1px solid #d0cbc3;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+.btn-alchemy-outline:hover { background: #ddd8d0; border-color: #bbb4ab; color: #333; }
+
+/* Toggle switch */
+.alchemy-toggle-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.alchemy-toggle {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 26px;
+    flex-shrink: 0;
+}
+
+.alchemy-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.alchemy-toggle-slider {
+    position: absolute;
+    inset: 0;
+    background: #ccc;
+    border-radius: 26px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.alchemy-toggle-slider::before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 3px;
+    top: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.alchemy-toggle input:checked + .alchemy-toggle-slider {
+    background: #2c4a3e;
+}
+
+.alchemy-toggle input:checked + .alchemy-toggle-slider::before {
+    transform: translateX(22px);
+}
+
+.alchemy-toggle input:disabled + .alchemy-toggle-slider {
+    background: #e0ddd9;
+    cursor: not-allowed;
+}
+
+.alchemy-toggle input:disabled + .alchemy-toggle-slider::before {
+    background: #f5f5f5;
+}
+
+.alchemy-toggle-label {
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #666;
+}
+
+.btn-alchemy-danger {
+    display: inline-block;
+    padding: 0.52rem 1.5rem;
+    background: #8b2121;
+    color: #fff;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: 2px solid #8b2121;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+.btn-alchemy-danger:hover { background: transparent; color: #8b2121; }
+
+.btn-alchemy-success {
+    display: inline-block;
+    padding: 0.52rem 1.5rem;
+    background: #2c4a3e;
+    color: #fff;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: 2px solid #2c4a3e;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+.btn-alchemy-success:hover { background: transparent; color: #2c4a3e; }
+
+/* button row */
+.btn-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* =============================================
+   FORMS
+   ============================================= */
+
+.alchemy-form { max-width: 540px; }
+.alchemy-form-wide { max-width: 780px; }
+
+.alchemy-form .form-label,
+.alchemy-form-wide .form-label {
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.alchemy-form .form-control,
+.alchemy-form-wide .form-control,
+.alchemy-form .form-select,
+.alchemy-form-wide .form-select {
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    padding: 0.62rem 0.88rem;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.94rem;
+    font-weight: 300;
+    color: #2c2c2c;
+    background: #fafafa;
+    transition: border-color 0.2s;
+    width: 100%;
+}
+
+.alchemy-form .form-control:focus,
+.alchemy-form-wide .form-control:focus,
+.alchemy-form .form-select:focus,
+.alchemy-form-wide .form-select:focus {
+    outline: none;
+    border-color: #2c4a3e;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(44,74,62,0.1);
+}
+
+.form-hint {
+    font-size: 0.78rem;
+    color: #aaa;
+    margin-top: 4px;
+}
+
+.form-error {
+    font-size: 0.8rem;
+    color: #8b2121;
+    margin-top: 4px;
+}
+
+.form-group { margin-bottom: 22px; }
+
+/* search bar in lists */
+.list-search {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+}
+
+.list-search .form-control {
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    padding: 0.55rem 0.85rem;
+    font-size: 0.9rem;
+    font-weight: 300;
+    background: #fafafa;
+    width: 220px;
+}
+
+/* =============================================
+   CARDS
+   ============================================= */
+
+.alchemy-card {
+    border: 1px solid #e8e8e8;
+    border-radius: 2px;
+    padding: 26px 30px;
+    background: #fff;
+    margin-bottom: 16px;
+}
+
+.alchemy-card-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #2c4a3e;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.alchemy-card-row {
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1px solid #f5f5f5;
+    font-size: 0.92rem;
+}
+
+.alchemy-card-row:last-child { border-bottom: none; }
+
+.alchemy-card-label {
+    width: 170px;
+    flex-shrink: 0;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #aaa;
+    padding-top: 2px;
+}
+
+.alchemy-card-value { color: #2c2c2c; font-weight: 300; }
+
+/* =============================================
+   ALERTS
+   ============================================= */
+
+.alchemy-alert {
+    padding: 14px 20px;
+    border-left: 3px solid #2c4a3e;
+    background: #fffbf0;
+    font-size: 0.92rem;
+    color: #555;
+    margin-bottom: 26px;
+    border-radius: 0 2px 2px 0;
+}
+
+.alchemy-alert-danger {
+    padding: 14px 20px;
+    border-left: 3px solid #8b2121;
+    background: #fdf5f5;
+    font-size: 0.92rem;
+    color: #555;
+    margin-bottom: 26px;
+    border-radius: 0 2px 2px 0;
+}
+
+.alchemy-alert-success {
+    padding: 14px 20px;
+    border-left: 3px solid #1e5c2e;
+    background: #f3faf5;
+    font-size: 0.92rem;
+    color: #2c2c2c;
+    margin-bottom: 26px;
+    border-radius: 0 2px 2px 0;
+}
+
+.alchemy-alert-info {
+    padding: 14px 20px;
+    border-left: 3px solid #1e3a5f;
+    background: #f3f6fb;
+    font-size: 0.92rem;
+    color: #555;
+    margin-bottom: 26px;
+    border-radius: 0 2px 2px 0;
+}
+
+/* =============================================
+   AUTH PAGES
+   ============================================= */
+
+.auth-wrapper {
+    flex: 1 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f0e8;
+    padding: 60px 20px;
+}
+
+.auth-card {
+    background: #fff;
+    width: 100%;
+    max-width: 460px;
+    padding: 52px 48px 46px;
+    box-shadow: 0 2px 24px rgba(0,0,0,0.07);
+    border-radius: 16px;
+}
+
+.auth-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: center;
+    margin-bottom: 28px;
+    letter-spacing: 0.3px;
+}
+
+/* hide subtitle and gold line on auth pages — clean look */
+.auth-subtitle { display: none; }
+.auth-gold-line { display: none; }
+
+/* override form controls for auth pages */
+.auth-card .form-label {
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: none;
+    color: #2c2c2c;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.auth-card .form-control {
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.97rem;
+    font-weight: 300;
+    color: #2c2c2c;
+    background: #fff;
+    transition: border-color 0.2s;
+    width: 100%;
+}
+
+.auth-card .form-control:focus {
+    outline: none;
+    border-color: #1a1a1a;
+    box-shadow: none;
+}
+
+.auth-card .form-control::placeholder {
+    color: #bbb;
+    font-weight: 300;
+}
+
+.auth-card .form-group { margin-bottom: 18px; }
+
+.password-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrap .form-control {
+    padding-right: 3rem;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 0.85rem;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: #bbb;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.password-toggle:hover,
+.password-toggle.active { color: #2c4a3e; }
+
+.eye-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.auth-card .btn-auth-submit {
+    display: block;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background: #1a1a1a;
+    color: #fff;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 8px;
+    text-align: center;
+}
+
+.auth-card .btn-auth-submit:hover { background: #333; }
+
+.auth-footer-link {
+    text-align: center;
+    margin-top: 22px;
+    font-size: 0.88rem;
+    color: #999;
+}
+
+.auth-footer-link a { color: #1a1a1a; font-weight: 700; }
+.auth-footer-link a:hover { text-decoration: underline; }
+
+/* =============================================
+   FOOTER
+   ============================================= */
+
+.site-footer {
+    background: #f5f0e8;
+    color: #4b5f66;
+    padding: 50px 40px 28px;
+    font-family: 'Open Sans', Arial, sans-serif;
+    border-top: 1px solid #e2dbd0;
+}
+
+.footer-main {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+.footer-brand h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    color: #2c4a3e;
+    letter-spacing: 3px;
+    font-size: 2.2rem !important;
+    margin-bottom: 12px;
+}
+
+.footer-brand p {
+    line-height: 1.7;
+    margin: 0 0 18px;
+    font-size: 0.88rem;
+    color: #4b5f66;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 14px;
+}
+
+.footer-links a,
+.footer-link {
+    color: #4b5f66;
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover,
+.footer-link:hover { color: #2c4a3e; }
+
+.footer-reservations {
+    display: inline-block;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #2c4a3e;
+    border-bottom: 1px solid #2c4a3e;
+    padding-bottom: 2px;
+}
+
+.footer-divider {
+    margin: 28px auto 18px;
+    max-width: 1140px;
+    border: none;
+    border-top: 1px solid #e2dbd0;
+}
+
+.footer-copy {
+    text-align: center;
+    margin: 0;
+    color: #4b5f66;
+    font-size: 0.8rem;
+}
+
+/* =============================================
+   ERROR PAGES
+   ============================================= */
+
+.error-wrapper {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    text-align: center;
+    background: #f5f0e8;
+}
+
+.error-code {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 7rem;
+    font-weight: 700;
+    color: #ddd;
+    line-height: 1;
+}
+
+.error-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.9rem;
+    color: #1a1a1a;
+    margin: 10px 0 8px;
+}
+
+.error-message {
+    font-size: 0.95rem;
+    color: #999;
+    margin-bottom: 30px;
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+
+@media (max-width: 900px) {
+    .content-area { padding: 40px 24px 60px; }
+    .about-section { padding: 50px 0; }
+    .content-box { padding: 0 24px; }
+    .page-header { padding: 38px 24px 34px; }
+    .site-footer { padding: 40px 24px 24px; }
+    .footer-main { grid-template-columns: 1fr; gap: 24px; }
+    .footer-links { padding-top: 0; }
+    .chef-section { flex-direction: column; }
+    .hero { height: 420px; }
+    .hero-overlay h1 { font-size: 3rem; }
+}
+
+@media (max-width: 580px) {
+    .hero { height: 340px; }
+    .hero-overlay h1 { font-size: 2.2rem; letter-spacing: 3px; }
+    .hero-overlay h2 { font-size: 1rem; }
+    .content-area { padding: 30px 16px 50px; }
+    .alchemy-card { padding: 18px 18px; }
+}

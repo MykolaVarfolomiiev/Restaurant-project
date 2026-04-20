@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Seating — Alchemy</title>
+    <link th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <nav th:replace="~{nav :: navbar}"></nav>
+</header>
+
+<div class="page-header">
+    <h1>Delete Seating</h1>
+    <div class="sub">Seatings</div>
+    <div class="gold-line"></div>
+</div>
+
+<div class="content-area">
+    <div class="alchemy-alert-danger">
+        You are about to delete this seating. If it has reservations, it will be <strong>archived</strong> instead of permanently deleted.
+    </div>
+
+    <div class="alchemy-card" style="max-width:560px;">
+        <div class="alchemy-card-title">Seating Details</div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">Seating Name</div>
+            <div class="alchemy-card-value" th:text="${seating.name}">Evening Service</div>
+        </div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">Event</div>
+            <div class="alchemy-card-value" th:text="${eventName}">Event Name</div>
+        </div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">Start Date &amp; Time</div>
+            <div class="alchemy-card-value" th:text="${#temporals.format(seating.startDateTime, 'MMM d, yyyy — h:mm a')}">Jan 1, 2025 — 7:00 PM</div>
+        </div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">Duration</div>
+            <div class="alchemy-card-value" th:text="${seating.durationMinutes + ' min'}">90 min</div>
+        </div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">Tables</div>
+            <div class="alchemy-card-value">
+                <span th:each="tableId, iterStat : ${seating.tableIds}"
+                      th:text="${(iterStat.first ? '' : ', ') + tableNamesById.get(tableId)}">Table 1</span>
+            </div>
+        </div>
+    </div>
+
+    <form th:action="@{/seatings/delete/{id}(id=${seating.id})}" method="post" class="btn-row" style="margin-top:24px;"
+          onsubmit="this.querySelector('button[type=submit]').disabled=true;">
+        <a th:href="@{/seatings}" class="btn-alchemy-outline">Cancel</a>
+        <button type="submit" class="btn-alchemy-danger">Confirm Delete or Archive</button>
+    </form>
+</div>
+
+<footer>
+    <div th:replace="~{partial :: footer}"></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>Edit Menu Item — Alchemy</title>
+</head>
+<body>
+<header>
+    <nav th:replace="~{nav :: navbar}"></nav>
+</header>
+
+<div class="page-header">
+    <h1>Edit Menu Item</h1>
+    <div class="sub">Update</div>
+    <div class="gold-line"></div>
+</div>
+
+<div class="content-area">
+    <div class="alchemy-form">
+        <form method="post"
+              th:action="@{/menu/{menuId}/menuitem/edit(menuId=${menu.id})}"
+              th:object="${menuItem}">
+            <div th:replace="~{menuitem/fragments :: input}"></div>
+            <div class="btn-row" style="margin-top:24px;">
+                <input type="submit" value="Save Changes" class="btn-alchemy-edit"/>
+                <a th:href="@{/event/menu/edit/{id}(id=${menu.id})}" class="btn-alchemy-outline">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer>
+    <div th:replace="~{partial :: footer}"></div>
+</footer>
+</body>
+</html>

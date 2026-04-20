@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Track Reservation — Alchemy</title>
+    <link th:replace="~{partial :: bootstrap}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <nav th:replace="~{nav :: navbar}"></nav>
+</header>
+
+<div class="page-header">
+    <h1>Track Reservation</h1>
+    <div class="sub">Look Up Your Request</div>
+    <div class="gold-line"></div>
+</div>
+
+<div class="content-area">
+    <p style="font-size:0.92rem; color:#888; margin-bottom:28px;">Enter the confirmation code you received after submitting your request.</p>
+
+    <div class="alchemy-card" style="max-width:600px; margin-bottom:24px;">
+        <form th:action="@{/reserve/track}" method="get" style="display:flex; gap:12px; align-items:flex-end;">
+            <div style="flex:1;">
+                <label class="form-label" for="uuid">Reservation Code (UUID)</label>
+                <input class="form-control" id="uuid" name="uuid" type="text"
+                       th:value="${submittedUuid}"
+                       placeholder="e.g. 865d4b1a-7373-4d28-b921-f737f22b808f" autocomplete="off"/>
+            </div>
+            <button type="submit" class="btn-alchemy-primary" style="white-space:nowrap;">Look Up</button>
+        </form>
+    </div>
+
+    <div th:if="${invalidUuid}" class="alchemy-alert">
+        That code is not a valid format. Please copy the full code from your confirmation message.
+    </div>
+
+    <div th:if="${notFound}" class="alchemy-alert-info">
+        No reservation was found for that code. Check for typos, or
+        <a th:href="@{/reserve}" style="color:#2c4a3e; font-weight:600;">submit a new request</a>.
+    </div>
+
+    <div th:if="${detail != null}" class="alchemy-card" style="max-width:560px;">
+        <div class="alchemy-card-title">Your Reservation</div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">Event</div>
+            <div class="alchemy-card-value" th:text="${detail.eventName}">—</div>
+        </div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">Seating Date &amp; Time</div>
+            <div class="alchemy-card-value" th:text="${#temporals.format(detail.seatingStartDateTime, 'MMM d, yyyy h:mm a')}">—</div>
+        </div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">First Name</div>
+            <div class="alchemy-card-value" th:text="${detail.firstName}">—</div>
+        </div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">Last Name</div>
+            <div class="alchemy-card-value" th:text="${detail.lastName}">—</div>
+        </div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">Group Size</div>
+            <div class="alchemy-card-value" th:text="${detail.groupSize}">—</div>
+        </div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">Status</div>
+            <div class="alchemy-card-value" th:text="${detail.status}">—</div>
+        </div>
+        <div class="alchemy-card-row">
+            <div class="alchemy-card-label">Reference Code</div>
+            <div class="alchemy-card-value" style="font-family:monospace; font-size:0.85rem;" th:text="${detail.uuid}">—</div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div th:replace="~{partial :: footer}"></div>
+</footer>
+</body>
+</html>
