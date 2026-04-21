@@ -18,9 +18,13 @@ A modular restaurant management application built with Spring Boot, Jakarta EE, 
 - Event support
 ![events.png](Artifacs/Project%20pics/events.png)
 - User authentication and authorization
+![login.png](Artifacs/Project%20pics/login.png)
+![register.png](Artifacs/Project%20pics/register.png)
 - JWT-based security
 - Email notification integration
+![email.png](Artifacs/Project%20pics/email.png)
 - REST API and web UI support
+![API endpoints.png](Artifacs/Project%20pics/API%20endpoints.png)
 - Centralized error handling
 - Logging and environment-based configuration
 
@@ -44,4 +48,4 @@ The project is organized into multiple modules, including:
 - `app-web` and `app-rest-api` for application entry points
 
 ## Purpose
-This project is designed to manage restaurant operations efficiently, including reservations, seating, menu handling, and secure user access.
+This project is designed to manage restaurant operations efficiently, including reservations, seating, events, menu handling, and secure user access.
