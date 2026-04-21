@@ -90,6 +90,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <outputDirectory>/app/target</outputDirectory>
+                </configuration>
             </plugin>
         </plugins>
     </build>
