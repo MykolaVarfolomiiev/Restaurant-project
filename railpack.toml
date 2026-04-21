@@ -1,0 +1,3 @@
+[[copy]]
+from = "app-rest-api/target/app-rest-api-1.0-SNAPSHOT.jar"
+to = "/app/target/app-rest-api-1.0-SNAPSHOT.jar"
